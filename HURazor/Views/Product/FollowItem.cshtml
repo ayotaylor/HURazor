@@ -1,0 +1,43 @@
+﻿@model IEnumerable<HURazor.Models.Product>
+
+@{
+    ViewBag.Title = "FollowItem";
+}
+
+<h2>Item Followed!</h2>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DetailsUrl)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src ='@Url.Content(item.ImageUrl)' />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a class="item-title" href= "@item.DetailsUrl" title="@item.ProductName">@item.ProductName</a>
+            </td>
+
+        </tr>
+    }
+</table>

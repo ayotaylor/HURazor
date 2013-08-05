@@ -1,0 +1,117 @@
+﻿@model IEnumerable<HURazor.Models.Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<!--<h2>Index</h2>-->
+
+<!--<p>
+    @Html.ActionLink("Create New", "Create")
+</p>  -->
+@using (Html.BeginForm())
+{    
+    <p>
+        Title: @Html.TextBox("SearchString")<!--<br />  -->
+        <input type="submit" value="Search" />
+    </p> 
+}
+
+<!--<form action="Employee/Index"  method="get">
+<input type="text" name="SearchParam" />
+<input type="submit" value="Search" /> -->
+
+@if (ViewBag.Search != null)
+{
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailsUrl)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src ='@Url.Content(item.ImageUrl)' />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a class="item-title" href= "@item.Link" title="@item.ProductName">@item.ProductName</a>
+                </td>
+               <!-- <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                </td> -->
+            </tr>
+        }
+    </table>
+}
+
+else if (Request.QueryString["q"] != null)
+{
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailsUrl)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src ='@Url.Content(item.ImageUrl)' />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a class="item-title" href= "@item.DetailsUrl" title="@item.ProductName">@item.ProductName</a>
+                </td>
+
+                <td>
+                    @using (Html.BeginForm("FollowItem", "Product", new {q=item.ASIN }))
+                    {
+                        <button class="btn btn-inverse" title="Follow" type="submit">Follow</button>
+                    }
+                </td>
+               <!-- <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                </td> -->
+            </tr>
+        }
+    </table>
+}
