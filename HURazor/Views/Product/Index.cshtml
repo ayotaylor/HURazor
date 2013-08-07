@@ -55,6 +55,25 @@
                 <td>
                     <a class="item-title" href= "@item.Link" title="@item.ProductName">@item.ProductName</a>
                 </td>
+                @if (User.Identity.IsAuthenticated  && !item.isFollowed)
+                {
+                <td>
+                    @using (Html.BeginForm("FollowItem", "Product", new {q=item.ASIN }))
+                    {
+                        <button class="btn btn-inverse" title="Follow" type="submit">Follow</button>
+                    }
+                </td>
+                }
+                else if (User.Identity.IsAuthenticated && item.isFollowed)
+                {
+                    <td>
+                    @using (Html.BeginForm("UnfollowItem", "Follow", new {q=item.ASIN }))
+                    {
+                        <button class="btn btn-inverse" title="Unfollow" type="submit">Unfollow</button>
+                    }
+                </td>
+                }
+                
                <!-- <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
@@ -99,13 +118,24 @@ else if (Request.QueryString["q"] != null)
                 <td>
                     <a class="item-title" href= "@item.DetailsUrl" title="@item.ProductName">@item.ProductName</a>
                 </td>
-
+                @if (User.Identity.IsAuthenticated && !item.isFollowed)
+                {
                 <td>
                     @using (Html.BeginForm("FollowItem", "Product", new {q=item.ASIN }))
                     {
                         <button class="btn btn-inverse" title="Follow" type="submit">Follow</button>
                     }
                 </td>
+                }
+                else if (User.Identity.IsAuthenticated && item.isFollowed)
+                {
+                    <td>
+                    @using (Html.BeginForm("UnfollowItem", "Follow", new {q=item.ASIN }))
+                    {
+                        <button class="btn btn-inverse" title="Unfollow" type="submit">Unfollow</button>
+                    }
+                </td>
+                }
                <!-- <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |

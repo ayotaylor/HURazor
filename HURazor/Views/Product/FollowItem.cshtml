@@ -1,9 +1,15 @@
-﻿@model IEnumerable<HURazor.Models.Product>
+﻿@model HURazor.Models.Product
 
 @{
     ViewBag.Title = "FollowItem";
 }
 
+@if (ViewBag.Message == "Item already followed")
+{
+    <h2>Item Already Followed!</h2>
+}
+else
+{
 <h2>Item Followed!</h2>
 <table>
     <tr>
@@ -22,22 +28,31 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
         <tr>
             <td>
-                <img src ='@Url.Content(item.ImageUrl)' />
+                <img src ='@Url.Content(Model.ImageUrl)' />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.DisplayFor(modelItem => Model.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => Model.Price)
             </td>
             <td>
-                <a class="item-title" href= "@item.DetailsUrl" title="@item.ProductName">@item.ProductName</a>
+                <a class="item-title" href= "@Model.DetailsUrl" title="@Model.ProductName">@Model.ProductName</a>
             </td>
+            @if (User.Identity.IsAuthenticated && Model.isFollowed)
+                {
+                    <td>
+                    @using (Html.BeginForm("UnfollowItem", "Follow", new {q=Model.ASIN }))
+                    {
+                        <button class="btn btn-inverse" title="Unfollow" type="submit">Unfollow</button>
+                    }
+                </td>
+                }
 
         </tr>
-    }
+ 
 </table>
+}
+
