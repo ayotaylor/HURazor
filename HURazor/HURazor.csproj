@@ -188,6 +188,7 @@
     <Compile Include="AmazonSigningBehaviorExtentionElement.cs" />
     <Compile Include="AmazonSigningEndpointBehavior.cs" />
     <Compile Include="AmazonSigningMessageInspector.cs" />
+    <Compile Include="Controllers\FollowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DAL\AmazonContext.cs" />
@@ -196,17 +197,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201307251901030_Initial.cs" />
-    <Compile Include="Migrations\201307251901030_Initial.Designer.cs">
-      <DependentUpon>201307251901030_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201308052015551_initial.cs" />
+    <Compile Include="Migrations\201308052015551_initial.Designer.cs">
+      <DependentUpon>201308052015551_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201307251905208_nameEmailFollow.cs" />
-    <Compile Include="Migrations\201307251905208_nameEmailFollow.Designer.cs">
-      <DependentUpon>201307251905208_nameEmailFollow.cs</DependentUpon>
+    <Compile Include="Migrations\201308052022353_userprofile.cs" />
+    <Compile Include="Migrations\201308052022353_userprofile.Designer.cs">
+      <DependentUpon>201308052022353_userprofile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201307252006259_nameEmailFollow2.cs" />
-    <Compile Include="Migrations\201307252006259_nameEmailFollow2.Designer.cs">
-      <DependentUpon>201307252006259_nameEmailFollow2.cs</DependentUpon>
+    <Compile Include="Migrations\201308052029502_userprofileFollowProduct.cs" />
+    <Compile Include="Migrations\201308052029502_userprofileFollowProduct.Designer.cs">
+      <DependentUpon>201308052029502_userprofileFollowProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308061743034_followPrimaryKeyChange.cs" />
+    <Compile Include="Migrations\201308061743034_followPrimaryKeyChange.Designer.cs">
+      <DependentUpon>201308061743034_followPrimaryKeyChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308062030027_addedIsFollowedProduct.cs" />
+    <Compile Include="Migrations\201308062030027_addedIsFollowedProduct.Designer.cs">
+      <DependentUpon>201308062030027_addedIsFollowedProduct.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -221,6 +230,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Amazon.mdf" />
+    <Content Include="App_Data\Amazon_log.ldf">
+      <DependentUpon>Amazon.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\aspnet-HURazor-20130613151609.mdf" />
     <Content Include="App_Data\aspnet-HURazor-20130613151609_log.ldf">
       <DependentUpon>aspnet-HURazor-20130613151609.mdf</DependentUpon>
@@ -405,6 +418,11 @@
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\Account\AccountProfile.cshtml" />
     <Content Include="Views\Product\FollowItem.cshtml" />
+    <Content Include="Views\Follow\Index.cshtml" />
+    <Content Include="Views\Follow\Details.cshtml" />
+    <Content Include="Views\Follow\Create.cshtml" />
+    <Content Include="Views\Follow\Edit.cshtml" />
+    <Content Include="Views\Follow\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -416,14 +434,20 @@
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201307251901030_Initial.resx">
-      <DependentUpon>201307251901030_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201308052015551_initial.resx">
+      <DependentUpon>201308052015551_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307251905208_nameEmailFollow.resx">
-      <DependentUpon>201307251905208_nameEmailFollow.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201308052022353_userprofile.resx">
+      <DependentUpon>201308052022353_userprofile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307252006259_nameEmailFollow2.resx">
-      <DependentUpon>201307252006259_nameEmailFollow2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201308052029502_userprofileFollowProduct.resx">
+      <DependentUpon>201308052029502_userprofileFollowProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308061743034_followPrimaryKeyChange.resx">
+      <DependentUpon>201308061743034_followPrimaryKeyChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308062030027_addedIsFollowedProduct.resx">
+      <DependentUpon>201308062030027_addedIsFollowedProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

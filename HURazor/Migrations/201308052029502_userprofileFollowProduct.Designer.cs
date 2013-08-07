@@ -5,13 +5,13 @@ namespace HURazor.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class nameEmailFollow2 : IMigrationMetadata
+    public sealed partial class userprofileFollowProduct : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(nameEmailFollow2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(userprofileFollowProduct));
         
         string IMigrationMetadata.Id
         {
-            get { return "201307252006259_nameEmailFollow2"; }
+            get { return "201308052029502_userprofileFollowProduct"; }
         }
         
         string IMigrationMetadata.Source

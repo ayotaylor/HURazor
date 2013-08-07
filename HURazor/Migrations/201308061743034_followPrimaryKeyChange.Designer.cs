@@ -5,13 +5,13 @@ namespace HURazor.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class nameEmailFollow : IMigrationMetadata
+    public sealed partial class followPrimaryKeyChange : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(nameEmailFollow));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(followPrimaryKeyChange));
         
         string IMigrationMetadata.Id
         {
-            get { return "201307251905208_nameEmailFollow"; }
+            get { return "201308061743034_followPrimaryKeyChange"; }
         }
         
         string IMigrationMetadata.Source

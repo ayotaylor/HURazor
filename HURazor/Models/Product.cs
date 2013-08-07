@@ -35,9 +35,11 @@ namespace HURazor.Models
             }
         }
 
+        public bool isFollowed { get; set; }
+
         public Product[] RelatedItems { get; set; }
 
-        public virtual ICollection<Follow> Follows { get; set; }
-        //public virtual ICollection<Price> Prices { get; set; }
+        public virtual ICollection<Follow> Follows { get; set; } 
+        public virtual ICollection<Price> Prices { get; set; }
     }
 }

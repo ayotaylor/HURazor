@@ -7,10 +7,10 @@ namespace HURazor.Models
 {
     public class AmazonContext : DbContext
     {
-        /*public AmazonContext()
-            : base("DefaultConnection")
+        public AmazonContext()
+            : base("AmazonContext")
         {
-        }*/
+        }
         public DbSet<Product> Products { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Follow> Follows { get; set; }

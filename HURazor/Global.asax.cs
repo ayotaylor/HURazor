@@ -30,7 +30,7 @@ namespace HURazor
             Database.SetInitializer<AmazonContext>(new AmazonInitializer());
             if (!WebSecurity.Initialized)
             {
-                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId",
+                WebSecurity.InitializeDatabaseConnection("AmazonContext", "UserProfile", "UserId",
                                                          "UserName", autoCreateTables: true);
             }
         }

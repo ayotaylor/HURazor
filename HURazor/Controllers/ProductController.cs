@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using HURazor.Models;
 using HURazor.ServiceReference1;
 using System.Configuration;
+using WebMatrix.WebData;
+using System.Data.Entity.Validation;
 
 namespace HURazor.Controllers
 {
@@ -27,7 +29,7 @@ namespace HURazor.Controllers
             {
 
             }
-            else if (asinquery == null)
+            else if (asinquery == null)      // no item has been selected
             {
                 string accessKeyId = "AKIAJ4WDNF2MJZUAQDJQ";
                 string secretKey = "razor0df-20";
@@ -65,8 +67,19 @@ namespace HURazor.Controllers
                         });
                     }
                 }
+                foreach (var item in p)
+                {
+                    var pro = db.Products.SingleOrDefault(x => x.ASIN == item.ASIN);
+                    if (pro != null)
+                    {
+                        if (db.Follows.SingleOrDefault(i => i.UserId == WebSecurity.CurrentUserId && i.ProductID == pro.ProductID) == null)
+                            item.isFollowed = false;
+                        else
+                            item.isFollowed = true;
+                    }
+                }
             }
-            else if (asinquery != null)
+            else if (asinquery != null)    // item has been selected
             {
                 string accessKeyId = "AKIAJ4WDNF2MJZUAQDJQ";
                 string secretKey = "razor0df-20";
@@ -104,6 +117,17 @@ namespace HURazor.Controllers
                         });
                     }
                 }
+                foreach (var item in p)
+                {
+                    var pro = db.Products.SingleOrDefault(x => x.ASIN == item.ASIN);
+                    if (pro != null)
+                    {
+                        if (db.Follows.SingleOrDefault(i => i.UserId == WebSecurity.CurrentUserId && i.ProductID == pro.ProductID) == null)
+                            item.isFollowed = false;
+                        else
+                            item.isFollowed = true;
+                    }
+                }
                 asinquery = null;
             }
             return View(p.ToList());
@@ -111,6 +135,7 @@ namespace HURazor.Controllers
 
         public ActionResult FollowItem()
         {
+            #region makeamazonrequest
             List<Product> p = new List<Product>();
             //ViewBag.Search = SearchString;
             string asinquery = Request.QueryString["q"];
@@ -151,22 +176,73 @@ namespace HURazor.Controllers
                     });
                 }
             }
-            asinquery = null;
-
-            if (db.Products.FirstOrDefault(i => i.ASIN == p[0].ASIN) == null)
+            foreach (var thing in p)
             {
+                var pro = db.Products.SingleOrDefault(x => x.ASIN == thing.ASIN);
+                if (pro != null)
+                {
+                    if (db.Follows.SingleOrDefault(i => i.UserId == WebSecurity.CurrentUserId && i.ProductID == pro.ProductID) == null)
+                        thing.isFollowed = false;
+                    else
+                        thing.isFollowed = true;
+                }
+            }
+            asinquery = null;
+            #endregion
+
+            string asin = p[0].ASIN;
+            var item = db.Products.SingleOrDefault(i => i.ASIN == asin);    // find product
+            if (item == null)   // if product doesnt exist
+            {
+                // create new product and follow
                 var product = new Product { ProductName = p[0].ProductName, ASIN = p[0].ASIN, DetailsUrl = p[0].DetailsUrl,
                                             ImageUrl = p[0].ImageUrl, Price = p[0].Price};
-                //var follow = new Follow { Product = product, UserProfile = follow. };
-                Follow follow = new Follow();
-                follow.Product = product;
-                //follow.UserProfile = db.UserProfiles.Find(u => u.UserID = (int)Session["UserID"]);
                 db.Products.Add(product);
                 db.SaveChanges();
-
-            }
-
-            return View();
+                Follow follow = new Follow();
+                follow.Product = db.Products.Single(i => i.ASIN == asin);
+                follow.UserProfile = db.UserProfiles.FirstOrDefault(u => u.UserId == WebSecurity.CurrentUserId);
+                db.Follows.Add(follow);    // add product and user to follow table
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+                return View(product);
+            } 
+            else
+            {
+                // follow item if it exists already and the user is not following the item
+                var followed = db.Follows.SingleOrDefault(i => i.UserId == WebSecurity.CurrentUserId && i.ProductID == item.ProductID);
+                if (followed == null)
+                {
+                    Follow follow = new Follow();
+                    follow.Product = db.Products.Single(i => i.ASIN == asin);
+                    follow.UserProfile = db.UserProfiles.FirstOrDefault(u => u.UserId == WebSecurity.CurrentUserId);
+                    db.Follows.Add(follow);
+                    db.SaveChanges();
+                    return View(item);
+                }
+                    // the item is already being followed
+                else
+                {
+                    ViewBag.Message = "Item already followed";
+                    return View();
+                }
+            }  
         }
 
         //

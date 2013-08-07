@@ -15,8 +15,11 @@ namespace HURazor.Migrations
 
         protected override void Seed(HURazor.Models.AmazonContext context)
         {
-            WebSecurity.InitializeDatabaseConnection("AmazonContext", "UserProfile", "UserId",
-                                                         "UserName", autoCreateTables: true);
+            if (!WebSecurity.Initialized)
+            {
+                WebSecurity.InitializeDatabaseConnection("AmazonContext", "UserProfile", "UserId",
+                                                             "UserName", autoCreateTables: true);
+            }
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

@@ -42,9 +42,9 @@ namespace HURazor.Models
         public string LastName { get; set; }  // my addition
 
         [Display(Name = "Email address")]
-        public string Email { get; set; }     // my addition
+        public string Email { get; set; }     // my addition 
 
-        public virtual ICollection<Follow> Follows { get; set; }   // my addition 
+        public virtual ICollection<Follow> Follows { get; set; }   // my addition  
  
     }
 
